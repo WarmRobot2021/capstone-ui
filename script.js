@@ -60,7 +60,7 @@ async function renderData() {
 
     const container = document.querySelector(".container");
     const data = await fetchData();
-        
+    console.log("Organizations:", data)
     if (!data) {
 
         return;
@@ -72,13 +72,13 @@ async function renderData() {
         let card = document.createElement("div");
         card.classList.add("card");
 
-        let title = document.createElement("h2");
-        title.textContent = item.title;
+        let description = document.createElement("h2");
+        description.textContent = item.description;
 
         let body = document.createElement("p");
-        body.textContent = "hello";
+        body.textContent = item.title;
 
-        card.appendChild(title);
+        card.appendChild(description);
         card.appendChild(body);
         container.appendChild(card);
 

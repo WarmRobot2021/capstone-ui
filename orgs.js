@@ -1,6 +1,6 @@
 //fetch() method: It is defined on the window object, which we can use to perform request.
 //This method will return promise
-//Promise will either be fulfilled or rejected
+//Promise will either be fulfillorgJsoned or rejected
 console.log("hello world");
 async function fetchOrganizations() {
     
@@ -73,7 +73,7 @@ async function showOrgDetail(orgId) {
 
 }
 
-async function fetchOrganization(orgId) {
+async function fetchServices() {
     
     try {
         

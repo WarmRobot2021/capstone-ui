@@ -8,8 +8,9 @@
 </head>
 <body>
     
-    <div class="org-insert">
-        <form name="org-insert-form" method="post">
+    <div id="org-insert">
+        <h2>Create Organization</h2>
+        <form name="Organization Insert" method="post">
             <label for="orgName">Organization Name:</label>
             <input type="text" id="orgName" name="orgName"><br><br>
             <label for="description">Description:</label>
@@ -17,7 +18,7 @@
             <label for="phoneNumber">Phone Number:</label>
             <input type="text" id="phoneNumber" name="phoneNumber"><br><br>
             <label for="website">Website:</label>
-            <input type="text" id="website" name="webiste"><br><br>
+            <input type="text" id="website" name="website"><br><br>
             <label for="email">Email:</label>
             <input type="text" id="email" name="email"><br><br>
             <label for="fax">Fax:</label>
@@ -29,12 +30,50 @@
             <label for="latitude">Latitude:</label>
             <input type="text" id="latitude" name="latitude"><br><br>
             <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
         </form>
     </div>
-    <div class="schedule-insert">
-        <form name="Schedule" method="post">
-            <label for="serviceID">Service ID:</label>
-            <input type="text" id="serviceID" name="serviceID"><br><br>
+    <div id="org-update">
+        <h2>Update Organization</h2>
+        <form name="Organization Update" method="post" action="updateOrg.php">
+            <label for="orgName">Organization Name:</label>
+            <input type="text" id="orgName" name="orgName"><br><br>
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description"><br><br>
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber"><br><br>
+            <label for="website">Website:</label>
+            <input type="text" id="website" name="website"><br><br>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email"><br><br>
+            <label for="fax">Fax:</label>
+            <input type="text" id="fax" name="fax"><br><br>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address"><br><br>
+            <label for="longitude">Longitude:</label>
+            <input type="text" id="longitude" name="longitude"><br><br>
+            <label for="latitude">Latitude:</label>
+            <input type="text" id="latitude" name="latitude"><br><br>
+            <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
+        </form>
+    </div>
+    <div id="org-delete">
+        <h2>Delete Organization</h2>
+        <form name="Organization Delete" method="post" action="deleteOrg.php">
+            <label for="orgId">Organization ID:</label>
+            <input type="text" id="orgId" name="orgId"><br><br>
+            <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
+        </form>
+    </div>
+    <div id="schedule-insert">
+        <h2>Create Schedule</h2>
+        <form name="Schedule Insert" method="post" action="insertSchedule.php">
+            <label for="orgId">Organization ID:</label>
+            <input type="text" id="orgId" name="orgId"><br><br>
+            <label for="serviceId">Service ID:</label>
+            <input type="text" id="serviceId" name="serviceId"><br><br>
             <label for="day">Day:</label>
             <input type="text" id="day" name="day"><br><br>
             <label for="open">Opening time:</label>
@@ -42,21 +81,64 @@
             <label for="close">Closing time:</label>
             <input type="txt" id="close" name="close"><br><br>
             <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
         </form>
     </div>
-    <div class = "service-insert">
-        <form name="Services" method="post">
-            <label for="orgID">Organization ID</label>
-            <input type="text" id="orgID" name="orgId"><br><br>
-            <label for="serviceName">Service name:</label>
-            <input type="text" id="serviceName" name="serviceName"><br><br>
-            <label for="serviceCategory">Service category:</label>
-            <input type="text" id="serviceCategory" name="serviceCategory"><br><br>
+    <div id="schedule-update">
+        <h2>Update Schedule</h2>
+        <form name="Schedule Update" method="post" action="updateSchedule.php">
+            <label for="day">Day:</label>
+            <input type="text" id="day" name="day"><br><br>
+            <label for="open">Opening time:</label>
+            <input type="txt" id="open" name="open"><br><br>
+            <label for="close">Closing time:</label>
+            <input type="txt" id="close" name="close"><br><br>
             <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
         </form>
-
     </div>
-
+    <div id="schedule-delete">
+        <form name="Schedule Delete" method="post" action="deleteSchedule.php">
+            <h2>Delete Schedule</h2>
+            <label for="serviceId">Service ID:</label>
+            <input type="text" id="serviceId" name="serviceId">
+        </form>
+    </div>
+    <div id="service-insert">
+        <h2>Create Service</h2>
+        <form name="Service Insert" method="post" action="insertService.php">
+            <label for="orgId">Organization ID</label>
+            <input type="text" id="orgId" name="orgId"><br><br>
+            <label for="name">Service name:</label>
+            <input type="text" id="name" name="name"><br><br>
+            <label for="category">Service category:</label>
+            <input type="text" id="category" name="category"><br><br>
+            <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
+        </form>
+    </div>
+    <div id="service-update">
+        <h2>Update Service</h2>
+        <form name="Service Update" method="post" action="updateService.php">
+            <label for="orgId">Organization ID</label>
+            <input type="text" id="orgId" name="orgId"><br><br>
+            <label for="name">Service name:</label>
+            <input type="text" id="name" name="name"><br><br>
+            <label for="category">Service category:</label>
+            <input type="text" id="category" name="category"><br><br>
+            <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
+        </form>
+    </div>
+    <div id="service-delete">
+        <h2>Delete Service</h2>
+        <form name="Service Delete" method="post" action="deleteService.php">
+            <label for="serviceId">Service ID:</label>
+            <input type="text" id="serviceId" name="serviceId"><br><br>
+            <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
+        </form>
+    </div>
     <script src="admin.js"></script>
 </body>
 </html>

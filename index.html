@@ -14,15 +14,22 @@
     <div class="dropdown">
         <button onclick="getDropdown()" class="dropbtn">Dropdown</button>
         <div id="myDropdown" class="dropdown-content">
-            <a href="orgs.html">Food</a>
-            <a href="orgs.html">Housing</a>
-            <a href="orgs.html">Supplies</a>
-            <a href="orgs.html">Education</a>
-            <a href="orgs.html">Therapy</a>
-            <a href="orgs.html">Substance Abuse</a>
-            <a href="orgs.html">Health and Wellness</a>
+            <a href="#" onclick = "showCards('food')">Food</a>
+            <a href="#" onclick = "showCards('homelessness')">Housing</a>
+            <a href="#" onclick = "showCards('supplies')">Supplies</a>
+            <a href="#" onclick = "showCards('education')">Education</a>
+            <a href="#" onclick = "showCards('therapy')">Therapy</a>
+            <a href="#" onclick = "showCards('substance abuse')">Substance Abuse</a>
+            <a href="#" onclick = "showCards('health and wellness')">Health and Wellness</a>
         </div>
     </div> 
+    <div class="views">
+        <label>
+            <input type="checkbox" id ="openView" name="openView" checked>
+            Open Now
+        </label>
+    </div>
+    <div class="results"></div>
 
     <script src="index.js"></script>
 </body>

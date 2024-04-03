@@ -12,6 +12,7 @@ loginButton.addEventListener("click", (e) => {
 
         alert("You have successfully logged in.");
         location.reload();
+        
 
     }
 

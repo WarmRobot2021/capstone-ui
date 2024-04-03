@@ -99,14 +99,6 @@ async function showCards(category) {
 
         }
 
-        if (document.getElementById("distanceView").checked) {
-
-            navigator.geolocation.getCurrentPosition((position) => {
-                getDistance(position.coords.latitude, position.coords.lngitude);
-            })
-
-        }
-
         else {
             
 
@@ -116,6 +108,16 @@ async function showCards(category) {
             renderCards(cards);
 
         }
+
+        if (document.getElementById("distanceView").checked) {
+
+            navigator.geolocation.getCurrentPosition((position) => {
+                getDistance(position.coords.latitude, position.coords.lngitude);
+            })
+
+        }
+
+      
 
     }
 
@@ -179,7 +181,7 @@ async function addCardsToScreen(cardJson) {
         <!--insert script tag to loop over schedule-->
         <script><script>
         <p> ${cardJson.schedules[1]}>/p>
-        <button onclick="orgs.js">Go To Page</button>
+        <button type="button" onclick="window.open('127.0.0.1:5501/orgs.html', '_blank');">Go To Page</button>
     </div>`;
 
     container.insertAdjacentHTML("beforeend", htmlSnippet);

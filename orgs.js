@@ -1,12 +1,9 @@
-//fetch() method: It is defined on the window object, which we can use to perform request.
-//This method will return promise
-//Promise will either be fulfillorgJsoned or rejected
-console.log("hello world");
-async function fetchOrganizations() {
+
+async function fetchOrganizations(id) {
     
     try {
         
-        const response = await fetch("http://localhost:8080/Organizations");
+        const response = await fetch("http://localhost:8080/organizations/" + id);
         const orgs = await response.json();
         
         return orgs;
@@ -21,6 +18,11 @@ async function fetchOrganizations() {
 
 }
 
+window.onload = function() {
+
+    fetchOrganization(id);
+
+}
 function addOrgToScreen(orgJson) {
 
     const container = document.querySelector(".container");
@@ -28,6 +30,9 @@ function addOrgToScreen(orgJson) {
     const htmlSnippet = `
         <div class="card">
             <h2>${orgJson.name}</h2>
+            <br><br>
+            <h2>${orgJson.description}</h2>
+            <h2>${orgJson.website}</h2>
             <p>${orgJson.address}</p>
             <button onclick="showOrgDetail(${orgJson.id})">Go To Page</button>
         </div>

@@ -1,24 +1,7 @@
-let map;
+const map = L.map("map").setView([35.60095, -82.55402], 15);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
 
-async function initMap() {
-
-    fetch("http")
-    const position = { lat: -25.344, lng: 131.031};
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-
-    map = new Map(document.getElementById("map"), {
-        zoom: 4,
-        center: position,
-        mapId: "DEMO_MAP_ID",
-    });
-
-    const marker = new AdvancedMarkerElement({
-
-        map: map,
-        position: position,
-        title: "Uluru",
-    });
-}
-
-initMap();
+const marker = L.marker([35.60095, -82.55402]).addTo(map);

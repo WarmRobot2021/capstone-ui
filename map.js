@@ -1,6 +1,13 @@
 //code based on tutorial at leafletjs.com/examples/quick-start/
+/*NOTE: Routing done using the leaflet-routing-machine developed by pearliedman on github
+source code for it is found in the leaflet-routing-machine-3.2.12 folder. All credit goes to the original author.
+This service is made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/. 
+Any rights in individual contents of the database are licensed under the Database Contents License: http://opendatacommons.org/licenses/dbcl/1.0/
+Routing service uses OSRM*/
 const map = L.map("map").setView([35.60095000, -82.55402000], 14);
 let markerGroup = L.layerGroup();
+let group = L.featureGroup();
+
 /*map layers for terrain and satellite found at http://leaflet-extras.github.io/leaflet-providers/preview/, 
 streetview and satellite copied from tutorial at https://www.sitepoint.com/leaflet-create-map-beginner-guide/ */
 const basemaps = {
@@ -25,19 +32,22 @@ async function displayMarkers() {
         const marker = L.marker([orgs[i].latitude, orgs[i].longitude]).addTo(map);
         marker.addTo(markerGroup);
         marker.bindTooltip(`<b>${orgs[i].name}</b><br>`);
+        marker.addTo(group);
+        
     }
 
+
 }
-//code found on w3schools
+//code for geolocation found on w3schools, for error checking found on stackoverflow
 if (navigator.geolocation) {
 
-    navigator.geolocation.getCurrentPosition(showPosition);
-
+    navigator.geolocation.getCurrentPosition(showPosition, error);
+    
 }
 
 else {
 
-    console.log("Geolocation is not supported by this browser.");
+    alert("Geolocation is not supported by this browser.");
 
 }
 
@@ -53,6 +63,36 @@ function showPosition(position) {
     circle.bindTooltip("You are here").addTo(map);
 
     
+    //found on stackexchange
+    group.on("click", function (ev) {
+
+        const latlng = map.mouseEventToLatLng(ev.originalEvent);
+        console.log(latlng.lat + ", " + latlng.lng);
+
+    L.Routing.control({
+        waypoints: [
+            L.latLng(position.coords.latitude, position.coords.longitude),
+            L.latLng(ev.latlng.lat, ev.latlng.lng)
+        ]
+    }).addTo(map);
+
+    })
+
+    group.addTo(map);
+
+
+
+
+
 
 }
 
+
+function error(error) {
+
+    if (error.code == error.PERMISSION_DENIED) {
+
+        alert("Location data required to display current position on map");
+
+    }
+}

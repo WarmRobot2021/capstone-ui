@@ -123,33 +123,6 @@ async function fetchOrganization(orgId) {
         const response = await fetch("http://localhost:8080/organizations/" + orgId);
         const org = await response.json();
         return org;
-        /*
-        let card = document.createElement("div");
-        card.classList.add("orgCard");
-
-        let name = document.createElement("h2");
-        name.textContent = org.name;
-
-        let description = document.createElement("p");
-        body.textContent = org.description;
-
-        let address = document.createElement("p");
-        address.textContent = org.address;
-
-        let number = document.createElement("p");
-        number.textContent = org.number;
-
-        let email = document.createElement("p");
-        email.textContent = org.email;
-
-        let website = document.createElement("button");
-        website.textContent = org.website;
-
-        card.appendChild(description);
-        card.appendChild(body);
-        container.appendChild(card);
-        */
-
 
     }
 
@@ -162,9 +135,39 @@ async function fetchOrganization(orgId) {
 }
 
 
+
+
+
+function showPosition(position) {
+
+    console.log(position);
+    let user_position = {};
+    user_position.lat = position.coords.latitude;
+    user_position.lng = position.coords.latitude;
+    callback(user_position);
+
+}
+
+
+function error() {
+
+    if(error.code == error.PERMISSION_DENIED) {
+
+        alert("Location data required for distance view!");
+
+    }
+
+
+}
+
+function getDistance(serviceLat, serviceLong) {
+
+    const userLat = 5;
+}
+
 async function showCards(category) {
 
-    try {
+    if (document.getElementById("openView").checked) {
 
         if (document.getElementById("distanceView").checked) {
             
@@ -184,20 +187,43 @@ async function showCards(category) {
             let url = "http://localhost:8080/services/schedule/?open=true" + "&category=" + category
             const response = await fetch(url);
             const cards = await response.json();
+        let url = "http://localhost:8080/services/schedule/?open=true" + "&category=" + category
+        const response = await fetch(url);
+        const cards = await response.json();
             
-            //console.log(cards[0].id);
-            renderCards(cards);
+        renderCards(cards);
 
 
         }*/
 
        /* else {
             
+    }
 
-            let url = "http://localhost:8080/services/schedule/?open=false" + "&category=" + category
-            const response = await fetch(url);
-            const cards = await response.json(); 
-            renderCards(cards);
+    else {
+            
+
+        let url = "http://localhost:8080/services/schedule/?open=false" + "&category=" + category
+        const response = await fetch(url);
+        const cards = await response.json(); 
+        renderCards(cards);
+
+    }
+
+
+
+    if (document.getElementById("distanceView").checked) {
+
+       // getDistance();
+        /*if (navigator.geolocation) {
+                
+            navigator.geolocation.getCurrentPosition(showPosition, error);
+               
+        }
+
+        else {
+
+            alert("Geolocation is not supported by your browser!");
 
         }*/
 
@@ -206,14 +232,6 @@ async function showCards(category) {
       
 
     }
-
-    catch (error) {
-
-        console.error("Error fetching data:", error);
-
-    }
-
-
 
 }
 
@@ -230,36 +248,32 @@ async function renderCards(cards) {
 
     for (let i = 0; i < cards.length; i++) {
         
-        addCardsToScreen(cards[i]);
+        addCardsToScreen(cards[i], );
 
     }
 
 }
 
-async function addCardsToScreen(cardJson) {
+async function addCardsToScreen(cardJson, callback) {
+
+    if (document.getElementById("distanceView").checked) {
+
+        if (navigator.geolocation) {
+
+            const coordinates = navigator.geolocation.getCurrentPosition(function(position){console.log(position); let user_position = {}; user_position.lat = position.coords.latitude; user_position.lng = position.coords.longitude; callback(user_position);}, error);
+            console.log(coordinates);
+            
+
+        }
+
+        else alert("Your browser doesn't support geolocation!");
+
+    }
 
     const container = document.querySelector(".results");
     container.innerHTML= "";
     const org = await fetchOrganization(cardJson.orgId);
     console.log(org.name);
-    /*let box = document.createElement("div");
-    box.classList.add("card");
-
-    let orgName = document.createElement("h2");
-    orgName.textContent = fetchOrganization(cardJson.orgId).name;
-
-    let address = document.createElement("p");
-    address.textContent = fetchOrganization(cardJson.orgId).address;
-
-    let serviceName = document.createElement("p");
-    serviceName.textContent = cardJson.serviceName;
-
-    box.appendChild(orgName);
-    box.appendChild(address);
-    box.appendChild(serviceName)
-    container.appendChild(card);
-       */ 
-    
     const htmlSnippet = `<div class="serviceCard">
         <h1>${org.name}</h1>
         <h2>${cardJson.serviceName}</h2>

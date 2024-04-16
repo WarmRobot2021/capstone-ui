@@ -27,8 +27,22 @@ window.onclick = function (event) {
 
 async function getDistance(pos, category) {
 
-    console.log(category);
-    const response = await fetch("http://localhost:8080/services/schedule/?open=false&category=" + category);
+    //console.log(category);
+    let url;
+
+    if (document.getElementById("openView").checked) {
+
+        url = "http://localhost:8080/services/schedule/?open=true&category=" + category;
+
+    }
+
+    else {
+
+        url = "http://localhost:8080/services/schedule/?open=false&category=" + category;
+
+    }
+
+    const response = await fetch(url);
     const cards = await response.json();
 
     const container = document.querySelector(".results");
@@ -40,25 +54,25 @@ async function getDistance(pos, category) {
 
     }
 
-    //code adapted from stacoverflow post by user talkol
+    //code adapted from https://www.movable-type.co.uk/scripts/latlong.html
 
     let dictionary = new Object();
     let distanceResults = {};
 
-    const R = 6371;
+    const R = 6371e3;
 
     for (let i = 0; i < cards.length; i++) {
 
-        console.log(cards[i]);
+        //console.log(cards[i]);
         const lat1 = pos.coords.latitude;
         const long1 = pos.coords.longitude;
         const lat2 = cards[i].latitude;
         const long2 = cards[i].longitude;
 
-        console.log(lat1);
-        console.log(lat2);
-        console.log(long1);
-        console.log(long2);
+        //console.log(lat1);
+        //console.log(lat2);
+        //console.log(long1);
+        //console.log(long2);
 
         const latDifference = lat2 - lat1;
         const radLat = latDifference * (Math.PI / 180);
@@ -66,15 +80,15 @@ async function getDistance(pos, category) {
         const longDifference = long2 - long1;
         const radLong = longDifference * (Math.PI / 180);
 
-        const a = Math.sin(radLat/2) * Math.sin(latDifference/2) + 
-            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180))
-            Math.sin(longDifference/2) * Math.sin(longDifference/2);
+        const a = Math.sin(radLat/2) * Math.sin(radLat/2) + 
+            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+            Math.sin(radLong/2) * Math.sin(radLong/2);
         
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        const d = R * c;
-
-        console.log(d);
-        distanceResults[i] = d;
+        const dMiles = +((((R * c) / 1000) * 0.6214).toFixed(2));
+        
+        //console.log(dMiles);
+        distanceResults[i] = dMiles;
 
     }
 
@@ -87,17 +101,13 @@ async function getDistance(pos, category) {
 
     sortedResults.sort(function(first, second) {
 
-        return second[1] - first[1];
+        return first[1] - second[1];
 
     });
 
-    console.log(sortedResults);
+    showDistanceResults(sortedResults, cards);
 
-    
-
-
-
-}
+ }
 
 function error() {
 
@@ -255,13 +265,44 @@ async function addCardsToScreen(cardJson) {
         <h2>${cardJson.serviceName}</h2>
         <p> ${org.address}</p>
         <!--insert script tag to loop over schedule-->
-        <script><script>
+        <script>
+            for (let i = 0; i < cardJson.schedules[1])
+        </script>
         <p> ${cardJson.schedules[1]}>/p>
-        <button type="button" onclick="window.open('127.0.0.1:5501/orgs.html', '_blank');">Go To Page</button>
+        <button type="button" onclick="window.open('C:\Users\kiwit\capstone-ui\orgs.html', '_blank');">Go To Page</button>
     </div>`;
 
     container.insertAdjacentHTML("beforeend", htmlSnippet);
 
+}
+
+async function showDistanceResults(result, cardJson) {
+
+   /* for (let i = 0; i < cardJson[result[0][0]].schedules.length; i++) {
+
+        console.log(cardJson[result[0][0]].schedules[i].day);
+        console.log(cardJson[result[0][0]].schedules[i].open);
+        console.log(cardJson[result[0][0]].schedules[i].close);
+
+    }*/
+    const container = document.querySelector(".results");
+    container.innerHTML = '';
+
+    for (r in result) {
+
+        const org = await fetchOrganization(cardJson[result[r][0]].orgId);
+        const htmlSnippet = `<div class="serviceCard">
+       <h1>${org.name}</h1>
+       <h2>${cardJson[result[r][0]].serviceName}</h2>
+       <p> ${org.address}</p>
+       <p>${result[r][1]} miles away</p>
+       <button type="button" onclick="window.open('C:\Users\kiwit\capstone-ui\orgs.html', '_blank');">Go To Page</button>
+       <style>bord</style>
+       </div>`;
+       container.insertAdjacentHTML("beforeend", htmlSnippet);
+
+    }
+   
 }
 
 

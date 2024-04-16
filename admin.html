@@ -6,146 +6,19 @@
     <title>Document</title>
     <link rel = "stylesheet" href = "admin.css">
 </head>
-<body onload="chooseOption()">
+<body>
     <div id = "options">
         <h1>What would you like to do?</h1>
         <label>
-            <input type="radio" id="displayData" name="option">Display data
-            <input type="radio" id="insertData" name="option">Insert into database
-            <input type="radio" id="updateData" name="option">Update database
-            <input type="radio" id="deleteData" name="option">Delete from database
+            <input type="radio" id="displayData" name="option" onclick= "chooseOption('display')">Display data
+            <input type="radio" id="insertData" name="option" onclick="chooseOption('insert')">Insert into database
+            <input type="radio" id="updateData" name="option" onclick="chooseOption('update')">Update database
+            <input type="radio" id="deleteData" name="option" onclick="chooseOption('delete')">Delete from database
         </label>
     </div>
     <div class="forms">
-        <div class="forms" id="org-insert">
-            <h2>Create Organization</h2>
-            <form name="Organization Insert" method="post">
-                <label for="orgName">Organization Name:</label>
-                <input type="text" id="orgName" name="orgName"><br><br>
-                <label for="description">Description:</label>
-                <input type="text" id="description" name="description"><br><br>
-                <label for="phoneNumber">Phone Number:</label>
-                <input type="text" id="phoneNumber" name="phoneNumber"><br><br>
-                <label for="website">Website:</label>
-                <input type="text" id="website" name="website"><br><br>
-                <label for="email">Email:</label>
-                <input type="text" id="email" name="email"><br><br>
-                <label for="fax">Fax:</label>
-                <input type="text" id="fax" name="fax"><br><br>
-                <label for="address">Address:</label>
-                <input type="text" id="address" name="address"><br><br>
-                <label for="longitude">Longitude:</label>
-                <input type="text" id="longitude" name="longitude"><br><br>
-                <label for="latitude">Latitude:</label>
-                <input type="text" id="latitude" name="latitude"><br><br>
-                <input type="submit" value="Submit">
-                <input type="reset" value="Reset">
-            </form>
-        </div>
-        <div class="forms" id="org-update">
-            <h2>Update Organization</h2>
-            <form name="Organization Update" method="post">
-                <label for="orgUpdateName">Organization Name:</label>
-                <input type="text" id="orgUpdateName" name="orgUpdateName"><br><br>
-                <label for="orgUpdateDescription">Description:</label>
-                <input type="text" id="orgUpdateDescription" name="orgUpdateDescription"><br><br>
-                <label for="orgUpdateNumber">Phone Number:</label>
-                <input type="text" id="orgUpdateNumber" name="orgUpdateNumber"><br><br>
-                <label for="orgUpdateWebsite">Website:</label>
-                <input type="text" id="orgUpdateWebsite" name="orgUpdateWebsite"><br><br>
-                <label for="orgUpdateEmail">Email:</label>
-                <input type="text" id="orgUpdateEmail" name="orgUpdateEmail"><br><br>
-                <label for="orgUpdateFax">Fax:</label>
-                <input type="text" id="orgUpdateFax" name="orgUpdateFax"><br><br>
-                <label for="orgUpdateAddress">Address:</label>
-                <input type="text" id="orgUpdateAddress" name="orgUpdateAddress"><br><br>
-                <label for="orgUpdateLongitude">Longitude:</label>
-                <input type="text" id="orgUpdateLongitude" name="orgUpdateLongitude"><br><br>
-                <label for="orgUpdateLatitude">Latitude:</label>
-                <input type="text" id="orgUpdateLatitude" name="orgUpdateLatitude"><br><br>
-                <input type="submit" value="Submit">
-                <input type="reset" value="Reset">
-            </form>
-        </div>
-        <div class="forms" id="org-delete">
-            <h2>Delete Organization</h2>
-            <form name="Organization Delete" method="post" action="deleteOrg.php">
-                <label for="orgId">Organization ID:</label>
-                <input type="text" id="orgId" name="orgId"><br><br>
-                <input type="submit" value="Submit">
-                <input type="reset" value="Reset">
-            </form>
-        </div>
-        <div class="forms" id="schedule-insert">
-            <h2>Create Schedule</h2>
-            <form name="Schedule Insert" method="post" action="insertSchedule.php">
-                <label for="schedInsertServiceId">Service ID:</label>
-                <input type="text" id="schedInsertServiceId" name="schedInsertServiceId"><br><br>
-                <label for="schedInsertDay">Day:</label>
-                <input type="text" id="schedInsertDay" name="schedInsertDay"><br><br>
-                <label for="schedInsertOpen">Opening time:</label>
-                <input type="text" id="schedInsertOpen" name="schedInsertOpen"><br><br>
-                <label for="schedInsertClose">Closing time:</label>
-                <input type="text" id="schedInsertClose" name="schedInsertClose"><br><br>
-                <input type="submit" value="Submit">
-                <input type="reset" value="Reset">
-            </form>
-        </div>
-        <div class="forms" id="schedule-update">
-            <h2>Update Schedule</h2>
-            <form name="Schedule Update" method="post" action="updateSchedule.php">
-                <label for="day">Day:</label>
-                <input type="text" id="day" name="day"><br><br>
-                <label for="open">Opening time:</label>
-                <input type="txt" id="open" name="open"><br><br>
-                <label for="close">Closing time:</label>
-                <input type="txt" id="close" name="close"><br><br>
-                <input type="submit" value="Submit">
-                <input type="reset" value="Reset">
-            </form>
-        </div>
-        <div class="forms" id="schedule-delete">
-            <h2>Delete Schedule</h2>
-            <form name="Schedule Delete" method="post" action="deleteSchedule.php">
-                <label for="serviceId">Service ID:</label>
-                <input type="text" id="serviceId" name="serviceId">
-            </form>
-        </div>
-        <div class="forms" id="service-insert">
-            <h2>Create Service</h2>
-            <form name="Service Insert" method="post" action="insertService.php">
-                <label for="orgId">Organization ID</label>
-                <input type="text" id="orgId" name="orgId"><br><br>
-                <label for="name">Service name:</label>
-                <input type="text" id="name" name="name"><br><br>
-                <label for="category">Service category:</label>
-                <input type="text" id="category" name="category"><br><br>
-                <input type="submit" value="Submit">
-                <input type="reset" value="Reset">
-            </form>
-        </div>
-        <div class="forms" id="service-update">
-            <h2>Update Service</h2>
-            <form name="Service Update" method="post" action="updateService.php">
-                <label for="orgId">Organization ID</label>
-                <input type="text" id="orgId" name="orgId"><br><br>
-                <label for="name">Service name:</label>
-                <input type="text" id="name" name="name"><br><br>
-                <label for="category">Service category:</label>
-                <input type="text" id="category" name="category"><br><br>
-                <input type="submit" value="Submit">
-                <input type="reset" value="Reset">
-            </form>
-        </div>
-        <div class="forms" id="service-delete">
-            <h2>Delete Service</h2>
-            <form name="Service Delete" method="post" action="deleteService.php">
-                <label for="serviceId">Service ID:</label>
-                <input type="text" id="serviceId" name="serviceId"><br><br>
-                <input type="submit" value="Submit">
-                <input type="reset" value="Reset">
-            </form>
-        </div>
+    </div>
+    <div class="tables">
     </div>
     <script src="admin.js"></script>
 </body>

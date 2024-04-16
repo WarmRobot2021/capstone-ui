@@ -80,7 +80,6 @@ async function createOrg(ev) {
         headers: {
 
             "Content-type": "application/json; charset=UTF-8",
-            //"Access-Control-Allow-Origin": "*"
 
         },
         
@@ -109,4 +108,39 @@ async function createOrg(ev) {
 async function deleteOrg(ev) {
 
     
+}
+
+async function createSchedule(ev) {
+
+    ev.preventDefault();
+    const serviceId = document.getElementById("schedInsertServiceId").value;
+    const day = document.getElementById("schedInsertDay").value;
+    const openTime = document.getElementById("schedInsertOpen").value;
+    const closeTime = document.getElementById("schedInsertClose").value;
+
+    const response = await fetch("http://localhost:8080/schedule", {
+
+    method: "POST",
+    headers: {
+
+        "Content-type": "application/json; charset=UTF-8",
+
+    },
+    
+    body: JSON.stringify({
+
+        id: serviceId,
+        day: day,
+        open: openTime,
+        close: closeTime
+
+    })
+
+
+});
+
+const data = await response.text();
+console.log(data);
+
+
 }

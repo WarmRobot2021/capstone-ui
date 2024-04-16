@@ -1,6 +1,6 @@
 //code based on tutorial at leafletjs.com/examples/quick-start/
 const map = L.map("map").setView([35.60095000, -82.55402000], 14);
-
+let markerGroup = L.layerGroup();
 /*map layers for terrain and satellite found at http://leaflet-extras.github.io/leaflet-providers/preview/, 
 streetview and satellite copied from tutorial at https://www.sitepoint.com/leaflet-create-map-beginner-guide/ */
 const basemaps = {
@@ -23,6 +23,7 @@ async function displayMarkers() {
     for (let i = 0; i < orgs.length; i++) {
         
         const marker = L.marker([orgs[i].latitude, orgs[i].longitude]).addTo(map);
+        marker.addTo(markerGroup);
         marker.bindTooltip(`<b>${orgs[i].name}</b><br>`);
     }
 
@@ -50,6 +51,8 @@ function showPosition(position) {
     }).addTo(map);
 
     circle.bindTooltip("You are here").addTo(map);
+
+    
 
 }
 

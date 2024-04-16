@@ -1,3 +1,4 @@
+
 function getDropdown() {
 
     document.getElementById("myDropdown").classList.toggle("show");
@@ -24,17 +25,86 @@ window.onclick = function (event) {
     }
 }
 
-async function getDistance(pos) {
+async function getDistance(pos, category) {
 
-    const position = pos.coords;
-    const respones = await fetch("http://localhost:8080/services/schedule/?open=false");
+    console.log(category);
+    const response = await fetch("http://localhost:8080/services/schedule/?open=false&category=" + category);
     const cards = await response.json();
+
+    const container = document.querySelector(".results");
+
+    if (!cards) {
+
+        container.innerHTML = "No services available";
+        return;
+
+    }
+
+    //code adapted from stacoverflow post by user talkol
+
+    let dictionary = new Object();
+    let distanceResults = {};
+
+    const R = 6371;
 
     for (let i = 0; i < cards.length; i++) {
 
+        console.log(cards[i]);
+        const lat1 = pos.coords.latitude;
+        const long1 = pos.coords.longitude;
+        const lat2 = cards[i].latitude;
+        const long2 = cards[i].longitude;
+
+        console.log(lat1);
+        console.log(lat2);
+        console.log(long1);
+        console.log(long2);
+
+        const latDifference = lat2 - lat1;
+        const radLat = latDifference * (Math.PI / 180);
+
+        const longDifference = long2 - long1;
+        const radLong = longDifference * (Math.PI / 180);
+
+        const a = Math.sin(radLat/2) * Math.sin(latDifference/2) + 
+            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180))
+            Math.sin(longDifference/2) * Math.sin(longDifference/2);
         
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        const d = R * c;
+
+        console.log(d);
+        distanceResults[i] = d;
+
     }
+
+    //code adapted from stackoverflow post by user thefourtheye
+    const sortedResults = Object.keys(distanceResults).map(function(key) {
+
+        return [key, distanceResults[key]];
+
+    });
+
+    sortedResults.sort(function(first, second) {
+
+        return second[1] - first[1];
+
+    });
+
+    console.log(sortedResults);
+
+    
+
+
+
 }
+
+function error() {
+
+    alert("User position required for distance view!");
+
+}
+
 
 async function fetchOrganization(orgId) {
 
@@ -77,6 +147,7 @@ async function fetchOrganization(orgId) {
 
         console.error("Error fetching data:", error);
 
+
    }
 }
 
@@ -85,9 +156,20 @@ async function showCards(category) {
 
     try {
 
+        if (document.getElementById("distanceView").checked) {
+            
+            const self = this;
+
+            console.log("distance view");
+            navigator.geolocation.getCurrentPosition(function(position) {
+
+                getDistance(position, category);
+
+            });
+
+        }
         
-        
-        if (document.getElementById("openView").checked) {
+        /*if (document.getElementById("openView").checked) {
 
             let url = "http://localhost:8080/services/schedule/?open=true" + "&category=" + category
             const response = await fetch(url);
@@ -97,9 +179,9 @@ async function showCards(category) {
             renderCards(cards);
 
 
-        }
+        }*/
 
-        else {
+       /* else {
             
 
             let url = "http://localhost:8080/services/schedule/?open=false" + "&category=" + category
@@ -107,15 +189,9 @@ async function showCards(category) {
             const cards = await response.json(); 
             renderCards(cards);
 
-        }
+        }*/
 
-        if (document.getElementById("distanceView").checked) {
-
-            navigator.geolocation.getCurrentPosition((position) => {
-                getDistance(position.coords.latitude, position.coords.lngitude);
-            })
-
-        }
+        
 
       
 
@@ -134,7 +210,7 @@ async function showCards(category) {
 async function renderCards(cards) {
 
     
-    const container = document.querySelector("#results");
+    const container = document.querySelector(".results");
 
     if (!cards) {
 
